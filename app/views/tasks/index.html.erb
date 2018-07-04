@@ -1,29 +1,25 @@
 <h1>タスク一覧</h1>
 
-<% if @task.any? %>
   <table class="table table-striped">
-    <thead>
+        <thead>
       <tr>
         <th>id</th>
+        <th>投稿者</th>
         <th>タイトル</th>
-        <th>タスク</th>
+        <th>メッセージ</th>
       </tr>
     </thead>
     <tbody>
-      <% @task.each do |task| %>
+      <% @tasks.each do |task| %>
         <tr>
           <td><%= link_to task.id, task %></td>
+          <td><%= task.user.name %></td>
           <td><%= task.status %></td>
           <td><%= task.content %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div>
-    <%= paginate @task %>
-  </div>
-<% end %>
-
 
 <% if logged_in? %>
 
