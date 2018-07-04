@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:destroy]
   
   def index
     @task = Task.all.page(params[:page])
@@ -42,7 +43,7 @@ class TasksController < ApplicationController
     @task.destroy
 
     flash[:success] = 'Task は正常に削除されました'
-    redirect_to tasks_url
+    redirect_back(fallback_location: root_path)
   end
   
   private
@@ -57,8 +58,8 @@ class TasksController < ApplicationController
   end
   
   def correct_user
-    @micropost = current_user.microposts.find_by(id: params[:id])
-    unless @micropost
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
       redirect_to root_url
     end
   end
